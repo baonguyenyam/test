@@ -1,4 +1,4 @@
-# Cài đặt
+# Install
 
 > npm i 
 
@@ -6,23 +6,19 @@ và
 
 > npm audit fix
 
-Cài đặt Components 
+Install Components 
 
 > bower update 
 
-# Chạy dự án 
+# Run
 
 > npm start
 
-# Chạy Production 
+# Run Production 
 
 > gulp build --production
 
-# Cấu hình
+# Config
 
-- Xem file `config.json`
-- Xem các files trong thư mục `tasks`
-
-# Tạo Favicon
-
-https://www.favicon-generator.org/
+- Read file `config.json`
+- Read `tasks`
