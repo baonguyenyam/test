@@ -23,7 +23,6 @@ log.txt
 *.sublime-workspace
 .sass-cache/
 .versions/
-dist/
 tmp/
 temp/
 www/
