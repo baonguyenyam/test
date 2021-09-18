@@ -1,0 +1,57 @@
+{
+	"name": "baonguyenyam",
+	"version": "1.0.0",
+	"description": "Nguyen Pham",
+	"main": "index.js",
+	"scripts": {
+		"start": "gulp",
+		"prod": "gulp build --production",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"update": "ncu -u && ncu -u -m bower && npm i && npm i sass node-sass && bower update"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/baonguyenyam/myweb.git"
+	},
+	"author": "FullStack VietNam",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/baonguyenyam/myweb/issues"
+	},
+	"homepage": "https://baonguyenyam.com",
+	"dependencies": {
+		"babel-core": "^6.26.3",
+		"babel-preset-env": "^1.7.0",
+		"browser-sync": "^2.26.7",
+		"foldero": "^0.1.1",
+		"gulp": "^4.0.2",
+		"gulp-autoprefixer": "^7.0.1",
+		"gulp-babel": "^8.0.0",
+		"gulp-clean": "^0.4.0",
+		"gulp-clean-css": "^4.2.0",
+		"gulp-concat": "^2.6.1",
+		"gulp-data": "^1.3.1",
+		"gulp-htmlmin": "^5.0.1",
+		"gulp-inline-css": "^4.0.0",
+		"gulp-load-plugins": "^2.0.1",
+		"gulp-notify": "^3.2.0",
+		"gulp-plumber": "^1.2.1",
+		"gulp-pug": "^4.0.1",
+		"gulp-rename": "^1.4.0",
+		"gulp-replace": "^1.1.3",
+		"gulp-sass": "^4.0.2",
+		"gulp-sourcemaps": "^2.6.5",
+		"gulp-strip-comments": "^2.5.2",
+		"gulp-uglify": "^3.0.2",
+		"gulp-util": "^3.0.8",
+		"js-yaml": "^3.13.1",
+		"node-sass": "^4.12.0",
+		"npm-check-updates": "^3.1.24",
+		"run-sequence": "^2.2.1",
+		"sass": "^1.23.0"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.6.4",
+		"@babel/preset-env": "^7.6.3"
+	}
+}

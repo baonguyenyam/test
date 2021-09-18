@@ -1,0 +1,241 @@
+// STYLES //////////////////////////////
+
+body {
+	font-family: 'open sans', 'san serif';
+	margin: 0;
+
+	h2,
+	h4 {
+		padding-left: 25px;
+	}
+}
+
+hr {
+	color: #000;
+	border-top: 40px solid #000;
+}
+
+.itsagrid {
+	margin: 35px 0;
+
+	&.color .container {
+		background-color: #D34224;
+		position: relative;
+		color: #fff;
+	}
+
+	&.full-width .container {
+		background-color: #D34224;
+		color: #fff;
+	}
+
+	.container .inner {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+	}
+}
+
+.section-3 {
+	max-width: 900px;
+	margin: 0 auto;
+	padding: 20px;
+
+	.page-container {
+		background-color: #D34224;
+	}
+
+	.inner {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		padding: 20px
+	}
+
+	.col {
+		margin: 0 10px;
+		color: #fff;
+	}
+}
+
+.container {
+	padding: 20px;
+	max-width: 700px;
+	margin: 0 auto;
+
+	.col {
+		margin: 0 20px;
+	}
+}
+
+
+/* YOUR CODE BELOW HERE - reuse anything above if you'd like.*/
+
+// SET VARIABLES
+:root {
+	--color-1: #D34224;
+	--spacing: 20px;
+	--spacing-minute: -20px;
+}
+// @extend  
+.refactor-container {
+	.container, .page-container {
+		/* MOBILE VIEW */
+		.inner {
+			margin: 0 var(--spacing-minute);
+			flex-direction: column;
+			flex-wrap: wrap;
+			.col {
+				flex: 0 0 100%;
+				max-width: 100%;
+				box-sizing: border-box;
+				margin: 0 0 var(--spacing) 0;
+				padding-left: var(--spacing);
+				padding-right: var(--spacing);
+			}
+		}
+		/* TABLET & PC */
+		@media only screen and (min-width: 767px) {
+			.inner {
+				flex-direction: row;
+				.col {
+					flex: 0 0 33.333333%;
+					max-width: 33.333333%;
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+}
+// @ Mixins
+@mixin set-bg($type:'after',$color: transparent,$left:null,$right:null) {
+	position: relative;
+	&:#{$type} {
+		background-color: $color;
+		display: block;
+		content: '';
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		@if $left {
+			left: $left;
+		}
+		@if $right  {
+			right: $right;
+		}
+	}
+}
+
+// RE-LAYOUT
+body {
+	overflow-x: hidden;
+}
+section {
+	// Section 1
+	&.section-1 {
+		@extend .refactor-container;
+	}
+	// Section 2
+	&.section-2 {
+		@extend .refactor-container;
+		.container {
+			@include set-bg('after',var(--color-1),100%,null);
+		}
+	}
+	// Section 3
+	&.section-3 {
+		@extend .refactor-container;
+		.page-container {
+			max-width: calc(700px + var(--spacing) * 2);
+			margin: 0 auto;
+			@include set-bg('before',var(--color-1),null,100%);
+			@include set-bg('after',var(--color-1),100%,null);
+		}
+	}
+	// Section 4
+	&.section-4 {
+		.featured-image {
+			position: relative;
+			max-width: 100%;
+			.icon {
+				position: absolute;
+				bottom: 100%;
+				margin: 0;
+				width: 30%;
+				&.icon-shape-1 {
+					transform: translateY(45%);
+					z-index: -1;
+				}
+				&.icon-shape-2 {
+					left: 30%;
+					transform: translateY(5px);
+					z-index: 2;
+				}
+			}
+			img {
+				z-index: 1;
+				width: 400px;
+				max-width: 100%;
+			}
+			@media only screen and (min-width: 480px) {
+				.icon {
+					width: 170px;
+					&.icon-shape-1 {
+						transform: translateY(45%);
+					}
+					&.icon-shape-2 {
+						left: 125px;
+						transform: translateY(7%);
+					}
+				}
+			}
+		}
+	}
+	// Section 5
+	&.section5 {
+		@extend .refactor-container;
+		.container {
+			.inner {
+				padding: var(--spacing);
+				h4 {
+					order: 0;
+				}
+				button {
+					order: 1;
+					&:nth-child(5) {
+						order: 3;
+					}
+					&:nth-child(2) {
+						order: 4;
+					}
+					&:nth-child(3) {
+						order: 5;
+					}
+					&:nth-child(4) {
+						order: 2;
+					}
+				}
+				@media only screen and (min-width: 767px) {
+					flex-wrap: nowrap;
+					padding: 0;
+					button {
+						&:nth-child(5) {
+							order: 5;
+						}
+						&:nth-child(2) {
+							order: 3;
+						}
+						&:nth-child(3) {
+							order: 2;
+						}
+						&:nth-child(4) {
+							order: 4;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
