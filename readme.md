@@ -2,7 +2,7 @@
 
 > npm i 
 
-và 
+and 
 
 > npm audit fix
 
@@ -16,7 +16,7 @@ Install Components
 
 # Run Production 
 
-> gulp build --production
+> npm run prod
 
 # Config
 
