@@ -52,6 +52,8 @@ gulp.task('build', gulp.series(
 		'autoprefixer',
 		// 'inline',
 		// 'inline-css',
+		'revision',
+		'revreplace',
 		'browser-sync',
 		function (done) {
 			done();
