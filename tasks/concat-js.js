@@ -7,7 +7,7 @@ module.exports = function (gulp, $, browserSync) {
 				// Phần Plugins
 				// 'bower_components/owl.carousel/dist/owl.carousel.min.js',
 			])
-			.pipe($.concat('lib.js'))
+			.pipe($.concat('meyer.js'))
 			.pipe(gulp.dest('./dist/js'));
 	});
 };

@@ -8,7 +8,7 @@ module.exports = function (gulp, $, browserSync) {
 				// 'bower_components/owl.carousel/dist/assets/owl.carousel.min.css',
 				// 'bower_components/owl.carousel/dist/assets/owl.theme.default.min.css',
 			])
-			.pipe($.concat('lib.css'))
+			.pipe($.concat('meyer.css'))
 			.pipe(gulp.dest('./dist/css'));
 	});
 };

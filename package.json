@@ -1,7 +1,7 @@
 {
-	"name": "baonguyenyam",
+	"name": "meyer",
 	"version": "1.0.0",
-	"description": "Nguyen Pham",
+	"description": "Meyer Distributing Inc",
 	"main": "index.js",
 	"scripts": {
 		"start": "gulp",
@@ -11,12 +11,12 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/baonguyenyam/myweb.git"
+		"url": "git+https://github.com/baonguyenyam/meyer.git"
 	},
 	"author": "FullStack VietNam",
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/baonguyenyam/myweb/issues"
+		"url": "https://github.com/baonguyenyam/meyer/issues"
 	},
 	"homepage": "https://baonguyenyam.com",
 	"dependencies": {
