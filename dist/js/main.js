@@ -133,16 +133,24 @@ var MEYER_APP = {
 
     for (var key in arrayColors) {
       if (Object.hasOwnProperty.call(arrayColors, key)) {
-        $('#customColors').append('<option value="' + arrayColors[key] + '">' + arrayColors[key] + '</option>');
+        $('#customColors').append('<div class="form-check"><input class="form-check-input" id="inlineCheckbox_' + arrayColors[key] + '" type="checkbox" value="' + arrayColors[key] + '"><label class="form-check-label" for="inlineCheckbox_' + arrayColors[key] + '">' + capitalizeFirstLetter(arrayColors[key]) + '</label></div>');
       }
     }
 
     $('#customColors').on('change', function () {
-      window.location.href = queryAll(getParameterByName('showItems'), getParameterByName('page'), $('#customColors').val(), getParameterByName('type'), getParameterByName('rating'), getParameterByName('price'));
+      window.location.href = queryAll(getParameterByName('showItems'), getParameterByName('page'), $('#customColors input:checked').map(function () {
+        return $(this).val();
+      }).get().join(','), getParameterByName('type'), getParameterByName('rating'), getParameterByName('price'));
     });
 
     if (getParameterByName('color')) {
-      $('#customColors option[value="' + getParameterByName('color') + '"]').prop('selected', true);
+      var m = getParameterByName('color').split(',');
+
+      for (var _key2 in m) {
+        if (Object.hasOwnProperty.call(m, _key2)) {
+          $('#customColors input[value="' + m[_key2] + '"]').prop('checked', true);
+        }
+      }
     }
   },
   buildPaging: function buildPaging(e, i) {
@@ -175,6 +183,30 @@ var MEYER_APP = {
 
         for (var key in m) {
           _loop(key);
+        }
+
+        e = AlltmpData;
+      })();
+    }
+
+    if (getParameterByName('color')) {
+      (function () {
+        var m = getParameterByName('color').split(',');
+        var AlltmpData = [];
+
+        var _loop2 = function _loop2(key) {
+          var tmpData = [];
+
+          if (Object.hasOwnProperty.call(m, key)) {
+            tmpData = e.filter(function (item) {
+              return item.product_colors.includes(m[key]);
+            });
+            AlltmpData = AlltmpData.concat(tmpData);
+          }
+        };
+
+        for (var key in m) {
+          _loop2(key);
         }
 
         e = AlltmpData;

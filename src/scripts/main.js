@@ -84,14 +84,19 @@ var MEYER_APP = {
 		let arrayColors = ['Caramel','Classic Ivory','Coconut','Creamy Natural','Honey Beige','Ivory','Natural Beige','Nude','Porcelain Ivory','Pure Beige','Sandy Beige','Warm Porcelain'];
 		for (let key in arrayColors) {
 			if (Object.hasOwnProperty.call(arrayColors, key)) {
-				$('#customColors').append('<option value="' + arrayColors[key] + '">' + arrayColors[key] + '</option>');
+				$('#customColors').append('<div class="form-check"><input class="form-check-input" id="inlineCheckbox_'+arrayColors[key]+'" type="checkbox" value="' + arrayColors[key] + '"><label class="form-check-label" for="inlineCheckbox_'+arrayColors[key]+'">' + capitalizeFirstLetter(arrayColors[key]) + '</label></div>');
 			}
 		}
 		$('#customColors').on('change', () => {
-			window.location.href = queryAll(getParameterByName('showItems'), getParameterByName('page'), $('#customColors').val(), getParameterByName('type'), getParameterByName('rating'), getParameterByName('price'));
+			window.location.href = queryAll(getParameterByName('showItems'), getParameterByName('page'), $('#customColors input:checked').map(function() { return $(this).val(); }).get().join(','), getParameterByName('type'), getParameterByName('rating'), getParameterByName('price'));
 		});
 		if(getParameterByName('color')) {
-			$('#customColors option[value="'+getParameterByName('color')+'"]').prop('selected', true);
+			let m = getParameterByName('color').split(',');
+			for (let key in m) {
+				if (Object.hasOwnProperty.call(m, key)) {
+					$('#customColors input[value="'+m[key]+'"]').prop('checked', true);
+				}
+			}
 		}
 	},
 	buildPaging: (e,i) => {
@@ -113,6 +118,20 @@ var MEYER_APP = {
 				if (Object.hasOwnProperty.call(m, key)) {
 					tmpData = e.filter(function(item) {
 						return item.product_type.includes(m[key]);
+					});
+					AlltmpData = AlltmpData.concat(tmpData);
+				}
+			}
+			e = AlltmpData;
+		}
+		if(getParameterByName('color')) {
+			let m = getParameterByName('color').split(',');
+			let AlltmpData = [];
+			for (let key in m) {
+				let tmpData = [];
+				if (Object.hasOwnProperty.call(m, key)) {
+					tmpData = e.filter(function(item) {
+						return item.product_colors.includes(m[key]);
 					});
 					AlltmpData = AlltmpData.concat(tmpData);
 				}
