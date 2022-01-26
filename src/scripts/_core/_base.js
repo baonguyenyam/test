@@ -13,3 +13,8 @@ function capitalizeFirstLetter(string) {
 function queryAll(showItems = '', page = '', color = '', type = '', rating = '', price = '') {
     return '?showItems=' + showItems + '&page=' + page + '&color=' + color + '&type=' + type + '&rating=' + rating + '&price=' + price + '';
 }
+function filterObject(obj, callback) {
+    return Object.keys(obj).
+    filter((key) => key.includes(callback)).
+    reduce((cur, key) => { return Object.assign(cur, { [key]: obj[key] })}, {});
+  }

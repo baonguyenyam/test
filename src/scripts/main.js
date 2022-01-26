@@ -108,19 +108,32 @@ var MEYER_APP = {
 	init: () => {
 		MEYER_APP.jsonLoad(MEYER_APP.MEYER_REST_API,
 			(data) => { 
-				for (let index = 0; index < data.length; index++) {
-					console.log(data[index].product_colors);
-				}
 				MEYER_APP.buildShowItem();
 				MEYER_APP.buildcustomPrice();
 				MEYER_APP.buildcustomType();
 				MEYER_APP.buildcustomRating();
 				MEYER_APP.buildcustomColors();
-				MEYER_APP.buildPaging(MEYER_APP.MEYER_DEFAULT_PAGE, data.length);
 				// // Add Products
-				// $.each(data.slice(0,MEYER_APP.MEYER_DEFAULT_PAGE), (i, item) => {
-				// 	console.log(item);
-				// });
+				// let newData = data;
+				// for (const key in newData) {
+				// 	if (Object.hasOwnProperty.call(newData, key)) {
+				// 		console.log(newData[key].rating);
+				// 	}
+				// }
+				let newData = data.filter(function (el) {
+					return el.rating >= parseInt(getParameterByName('rating')) && el.rating <= (parseInt(getParameterByName('rating')) + 1);
+				});
+				console.log(newData);
+				if(parseInt(getParameterByName('page'))) {
+					$.each(newData.slice(((parseInt(getParameterByName('page'))-1)*MEYER_APP.MEYER_DEFAULT_PAGE),(((parseInt(getParameterByName('page'))-1)*MEYER_APP.MEYER_DEFAULT_PAGE)+MEYER_APP.MEYER_DEFAULT_PAGE)), (i, item) => {
+						console.log(item);
+					});
+				} else {
+					$.each(newData.slice(0,MEYER_APP.MEYER_DEFAULT_PAGE), (i, item) => {
+						console.log(item);
+					});
+				}
+				MEYER_APP.buildPaging(MEYER_APP.MEYER_DEFAULT_PAGE, newData.length);
 			},
 			(xhr) => { 
 				// console.error(xhr); 
