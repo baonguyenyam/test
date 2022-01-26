@@ -9,7 +9,7 @@ function getParameterByName(name, url = window.location.href) {
 function capitalizeFirstLetter(string) {
     let str = string.charAt(0).toUpperCase() + string.slice(1);
     return str.replace('_', ' ');
-  }
-function queryAll(showItems = '',page = '',color = '',type = '',rating = '',price = '') {
-    return '?showItems='+showItems+'&page='+page+'&color='+color+'&type='+type+'&rating='+rating+'&price='+price+'';
+}
+function queryAll(showItems = '', page = '', color = '', type = '', rating = '', price = '') {
+    return '?showItems=' + showItems + '&page=' + page + '&color=' + color + '&type=' + type + '&rating=' + rating + '&price=' + price + '';
 }
