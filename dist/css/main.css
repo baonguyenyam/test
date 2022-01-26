@@ -7239,18 +7239,28 @@ footer {
 
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
+  body .btn-small {
+    padding: .25rem .5rem;
+    font-size: .85rem;
+    line-height: 1; }
 
 section.products .item {
   margin-bottom: 30px; }
   section.products .item .product-item {
     display: flex;
-    justify-content: center;
+    height: 100%;
     align-items: center;
     flex-direction: column;
     border: 1px solid #f2f2f2;
-    border-radius: 3px; }
+    border-radius: 3px;
+    padding: 1.5rem; }
     section.products .item .product-item h5 {
-      font-weight: normal; }
+      font-weight: normal;
+      height: 3.1rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 100%;
+      display: block; }
     section.products .item .product-item .price {
       font-size: 1.1rem;
       font-weight: bold;
@@ -7259,9 +7269,12 @@ section.products .item {
       color: #ffeb3b; }
       section.products .item .product-item .rating .fa-star.deactive {
         color: #d9d9d9 !important; }
+    section.products .item .product-item .more {
+      margin-bottom: 0; }
     section.products .item .product-item:hover {
-      background: #f9f9f9;
-      border: 1px solid #ddd; }
+      background: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 18px #0000001c; }
 
 #staticBackdrop .item .product-item h5 {
   font-weight: normal; }

@@ -156,6 +156,96 @@ var MEYER_APP = {
       }
     }
   },
+  filterData: function filterData(e) {
+    if (getParameterByName('type')) {
+      (function () {
+        var m = getParameterByName('type').split(',');
+        var AlltmpData = [];
+
+        var _loop = function _loop(key) {
+          var tmpData = [];
+
+          if (Object.hasOwnProperty.call(m, key)) {
+            tmpData = e.filter(function (item) {
+              return item.product_type.includes(m[key]);
+            });
+            AlltmpData = AlltmpData.concat(tmpData);
+          }
+        };
+
+        for (var key in m) {
+          _loop(key);
+        }
+
+        e = AlltmpData;
+      })();
+    }
+
+    if (getParameterByName('price')) {
+      e = e.filter(function (el) {
+        return parseInt(el.price) <= parseInt(getParameterByName('price'));
+      });
+    }
+
+    if (getParameterByName('rating')) {
+      e = e.filter(function (el) {
+        return el.rating >= parseInt(getParameterByName('rating')) && el.rating < parseInt(getParameterByName('rating')) + 1;
+      });
+    } // NEW DATA 
+
+
+    console.log(e); // PAGING
+
+    if (parseInt(getParameterByName('page'))) {
+      $.each(e.slice((parseInt(getParameterByName('page')) - 1) * MEYER_APP.MEYER_DEFAULT_PAGE, (parseInt(getParameterByName('page')) - 1) * MEYER_APP.MEYER_DEFAULT_PAGE + MEYER_APP.MEYER_DEFAULT_PAGE), function (i, item) {
+        MEYER_APP.buildItems(item);
+      });
+    } else {
+      $.each(e.slice(0, MEYER_APP.MEYER_DEFAULT_PAGE), function (i, item) {
+        MEYER_APP.buildItems(item);
+      });
+    }
+
+    MEYER_APP.buildPaging(MEYER_APP.MEYER_DEFAULT_PAGE, e.length);
+  },
+  buildItems: function buildItems(e) {
+    $('#items').append('<div class="col-sm-6 col-md-4 item" id="item-' + e.id + '"> <div class="product-item"><img src="' + e.api_featured_image + '"> <h5 class="my-2">' + e.name + '</h5> <p class="rating" data-rating="' + e.rating + '"></p> <p class="price">$' + e.price + '</p> <p class="more"> <a class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#staticBackdrop" data-id="' + e.id + '">View More</a></p> </div> </div>');
+    $('[data-id="' + e.id + '"]').on('click', function () {
+      $('#staticBackdrop .modal-title').text(e.name);
+      $('#staticBackdrop .modal-body').html('<div class="row item"> <div class="col-lg-4"><img class="w-100" src="' + e.api_featured_image + '"></div> <div class="col-lg-8"> <div class="product-item"> <h3 class="my-2">' + e.name + '</h3> <p class="price mb-1">$' + e.price + '</p> <p class="rating"  data-rating="' + e.rating + '"></p> <ul class="colors list-inline"> <li class="list-inline-item">A</li> <li class="list-inline-item">A</li> <li class="list-inline-item">A</li> <li class="list-inline-item">A</li> </ul> <p class="desc">' + e.description + '</p> <p class="more"><a class="btn btn-primary" href="' + e.product_link + '" target="_blank">View More</a></p> </div> </div> </div>');
+    });
+    MEYER_APP.buildStars();
+    $('#staticBackdrop').on('show.bs.modal', function (event) {
+      MEYER_APP.buildStars();
+    });
+  },
+  buildStars: function buildStars() {
+    $('[data-rating]').each(function () {
+      var rating = Math.floor($(this).attr('data-rating'));
+      var dm = '';
+      var em = '';
+
+      if (rating > 0) {
+        for (var index = 0; index < rating; index++) {
+          dm += '<i class="fas fa-star"></i>';
+        }
+
+        if (rating < 5) {
+          for (var gindex = 0; gindex < 5 - rating; gindex++) {
+            em += '<i class="far fa-star deactive"></i>';
+          }
+        }
+
+        $(this).html(dm + em + ' <span class="text-muted small">(' + $(this).attr('data-rating') + '/5)</span>');
+      } else {
+        for (var _gindex = 0; _gindex < 5; _gindex++) {
+          em += '<i class="far fa-star deactive"></i>';
+        }
+
+        $(this).html(em);
+      }
+    });
+  },
   // Init App
   init: function init() {
     MEYER_APP.jsonLoad(MEYER_APP.MEYER_REST_API, function (data) {
@@ -163,60 +253,10 @@ var MEYER_APP = {
       MEYER_APP.buildcustomPrice();
       MEYER_APP.buildcustomType();
       MEYER_APP.buildcustomRating();
-      MEYER_APP.buildcustomColors(); // // Add Products
-
-      var newData = data;
-
-      if (getParameterByName('type')) {
-        (function () {
-          var m = getParameterByName('type').split(',');
-          var AlltmpData = [];
-
-          var _loop = function _loop(key) {
-            var tmpData = [];
-
-            if (Object.hasOwnProperty.call(m, key)) {
-              tmpData = newData.filter(function (item) {
-                return item.product_type.includes(m[key]);
-              });
-              AlltmpData = AlltmpData.concat(tmpData);
-            }
-          };
-
-          for (var key in m) {
-            _loop(key);
-          }
-
-          newData = AlltmpData;
-        })();
-      }
-
-      if (getParameterByName('price')) {
-        newData = newData.filter(function (el) {
-          return parseInt(el.price) <= parseInt(getParameterByName('price'));
-        });
-      }
-
-      if (getParameterByName('rating')) {
-        newData = newData.filter(function (el) {
-          return el.rating >= parseInt(getParameterByName('rating')) && el.rating < parseInt(getParameterByName('rating')) + 1;
-        });
-      }
-
-      console.log(newData);
-
-      if (parseInt(getParameterByName('page'))) {
-        $.each(newData.slice((parseInt(getParameterByName('page')) - 1) * MEYER_APP.MEYER_DEFAULT_PAGE, (parseInt(getParameterByName('page')) - 1) * MEYER_APP.MEYER_DEFAULT_PAGE + MEYER_APP.MEYER_DEFAULT_PAGE), function (i, item) {
-          console.log(item);
-        });
-      } else {
-        $.each(newData.slice(0, MEYER_APP.MEYER_DEFAULT_PAGE), function (i, item) {
-          console.log(item);
-        });
-      }
-
-      MEYER_APP.buildPaging(MEYER_APP.MEYER_DEFAULT_PAGE, newData.length);
-    }, function (xhr) {// console.error(xhr); 
+      MEYER_APP.buildcustomColors();
+      MEYER_APP.filterData(data);
+    }, function (xhr) {
+      console.error(xhr);
     });
   }
 };

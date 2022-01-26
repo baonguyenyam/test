@@ -104,6 +104,79 @@ var MEYER_APP = {
 			}
 		}
 	},
+	filterData: (e) => {
+		if(getParameterByName('type')) {
+			let m = getParameterByName('type').split(',');
+			let AlltmpData = [];
+			for (let key in m) {
+				let tmpData = [];
+				if (Object.hasOwnProperty.call(m, key)) {
+					tmpData = e.filter(function(item) {
+						return item.product_type.includes(m[key]);
+					});
+					AlltmpData = AlltmpData.concat(tmpData);
+				}
+			}
+			e = AlltmpData;
+		}
+		if(getParameterByName('price')) {
+			e = e.filter(function (el) {
+				return parseInt(el.price) <= parseInt(getParameterByName('price'));
+			});
+		}
+		if(getParameterByName('rating')) {
+			e = e.filter(function (el) {
+				return el.rating >= parseInt(getParameterByName('rating')) && el.rating < (parseInt(getParameterByName('rating')) + 1);
+			});
+		}
+		// NEW DATA 
+		console.log(e);
+		// PAGING
+		if(parseInt(getParameterByName('page'))) {
+			$.each(e.slice(((parseInt(getParameterByName('page'))-1)*MEYER_APP.MEYER_DEFAULT_PAGE),(((parseInt(getParameterByName('page'))-1)*MEYER_APP.MEYER_DEFAULT_PAGE)+MEYER_APP.MEYER_DEFAULT_PAGE)), (i, item) => {
+				MEYER_APP.buildItems(item);
+			});
+		} else {
+			$.each(e.slice(0,MEYER_APP.MEYER_DEFAULT_PAGE), (i, item) => {
+				MEYER_APP.buildItems(item);
+			});
+		}
+		MEYER_APP.buildPaging(MEYER_APP.MEYER_DEFAULT_PAGE, e.length);
+	},
+	buildItems: (e) => {
+		$('#items').append('<div class="col-sm-6 col-md-4 item" id="item-'+e.id+'"> <div class="product-item"><img src="'+e.api_featured_image+'"> <h5 class="my-2">'+e.name+'</h5> <p class="rating" data-rating="'+e.rating+'"></p> <p class="price">$'+e.price+'</p> <p class="more"> <a class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#staticBackdrop" data-id="'+e.id+'">View More</a></p> </div> </div>');
+		$('[data-id="'+e.id+'"]').on('click', () => {
+			$('#staticBackdrop .modal-title').text(e.name);
+			$('#staticBackdrop .modal-body').html('<div class="row item"> <div class="col-lg-4"><img class="w-100" src="'+e.api_featured_image+'"></div> <div class="col-lg-8"> <div class="product-item"> <h3 class="my-2">'+e.name+'</h3> <p class="price mb-1">$'+e.price+'</p> <p class="rating"  data-rating="'+e.rating+'"></p> <ul class="colors list-inline"> <li class="list-inline-item">A</li> <li class="list-inline-item">A</li> <li class="list-inline-item">A</li> <li class="list-inline-item">A</li> </ul> <p class="desc">'+e.description+'</p> <p class="more"><a class="btn btn-primary" href="'+e.product_link+'" target="_blank">View More</a></p> </div> </div> </div>');
+		})
+		MEYER_APP.buildStars()
+		$('#staticBackdrop').on('show.bs.modal', function (event) {
+			MEYER_APP.buildStars()
+		})
+	},
+	buildStars: () => {
+		$('[data-rating]').each(function() {
+			let rating = Math.floor($(this).attr('data-rating'));
+			let dm = '';
+			let em = '';
+			if(rating > 0) {
+				for (let index = 0; index < rating; index++) {
+					dm += '<i class="fas fa-star"></i>';
+				}
+				if(rating < 5) {
+					for (let gindex = 0; gindex < (5-rating); gindex++) {
+						em += '<i class="far fa-star deactive"></i>';
+					}
+				}
+				$(this).html(dm+em+' <span class="text-muted small">('+$(this).attr('data-rating')+'/5)</span>');
+			} else {
+				for (let gindex = 0; gindex < 5; gindex++) {
+					em += '<i class="far fa-star deactive"></i>';
+				}
+				$(this).html(em);
+			}
+		})
+	},
 	// Init App
 	init: () => {
 		MEYER_APP.jsonLoad(MEYER_APP.MEYER_REST_API,
@@ -113,47 +186,10 @@ var MEYER_APP = {
 				MEYER_APP.buildcustomType();
 				MEYER_APP.buildcustomRating();
 				MEYER_APP.buildcustomColors();
-				// // Add Products
-				let newData = data
-				
-				if(getParameterByName('type')) {
-					let m = getParameterByName('type').split(',');
-					let AlltmpData = [];
-					for (let key in m) {
-						let tmpData = [];
-						if (Object.hasOwnProperty.call(m, key)) {
-							tmpData = newData.filter(function(item) {
-								return item.product_type.includes(m[key]);
-							});
-							AlltmpData = AlltmpData.concat(tmpData);
-						}
-					}
-					newData = AlltmpData;
-				}
-				if(getParameterByName('price')) {
-					newData = newData.filter(function (el) {
-						return parseInt(el.price) <= parseInt(getParameterByName('price'));
-					});
-				}
-				if(getParameterByName('rating')) {
-					newData = newData.filter(function (el) {
-						return el.rating >= parseInt(getParameterByName('rating')) && el.rating < (parseInt(getParameterByName('rating')) + 1);
-					});
-				}
-				console.log(newData);
-				if(parseInt(getParameterByName('page'))) {
-					$.each(newData.slice(((parseInt(getParameterByName('page'))-1)*MEYER_APP.MEYER_DEFAULT_PAGE),(((parseInt(getParameterByName('page'))-1)*MEYER_APP.MEYER_DEFAULT_PAGE)+MEYER_APP.MEYER_DEFAULT_PAGE)), (i, item) => {
-						console.log(item);
-					});
-				} else {
-					$.each(newData.slice(0,MEYER_APP.MEYER_DEFAULT_PAGE), (i, item) => {
-						console.log(item);
-					});
-				}
-				MEYER_APP.buildPaging(MEYER_APP.MEYER_DEFAULT_PAGE, newData.length);
+				MEYER_APP.filterData(data);
 			},
 			(xhr) => { 
-				// console.error(xhr); 
+				console.error(xhr); 
 			}
 		);
 	},

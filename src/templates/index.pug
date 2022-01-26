@@ -18,15 +18,15 @@ block body
 		.container.py-3
 			.row 
 				.col-lg-3.order-lg-1.order-2
-					.d-lg-none
-						h4 Filter
-						hr.border-bottom 
-					h6.pb-3.mb-3.border-bottom Price
-					.mb-4
-						input#customPrice.custom-range(type="range")
+					.d-flex.mb-4.justify-content-between.align-items-center
+						h4 Filter by
+						a.filter_by.small.btn.btn-danger.btn-small(href="./") Clear
 					h6.pb-3.mb-3.border-bottom Type 
 					.mb-4
 						#customType
+					h6.pb-3.mb-3.border-bottom Price
+					.mb-4
+						input#customPrice.custom-range(type="range")
 					h6.pb-3.mb-3.border-bottom Rating
 					.mb-4
 						#customRating
@@ -35,8 +35,8 @@ block body
 						select#customColors.custom-select.mr-sm-2
 							option(value="") All 
 				.col-lg-9.order-lg-1.order-1
-					.row
-						.col-sm-6.col-md-4.item
+					.row#items
+						//- .col-sm-6.col-md-4.item
 							.product-item
 								img(src="./img/demo1.png")
 								h5.my-2 Product name
@@ -62,29 +62,8 @@ block body
 		.modal-dialog.modal-dialog-centered.modal-xl
 			.modal-content
 				.modal-header
-					h5#staticBackdropLabel.modal-title Product name
+					h5#staticBackdropLabel.modal-title 
 					button.close(type="button", data-dismiss="modal", aria-label="Close")
 						i.fas.fa-times
 				.modal-body
-					.row.item
-						.col-lg-4
-							img.w-100(src="./img/demo1.png")
-						.col-lg-8
-							.product-item
-								h3.my-2 Product name
-								p.price.mb-1 $32
-								p.rating
-									i.fas.fa-star
-									i.fas.fa-star
-									i.fas.fa-star
-									i.fas.fa-star
-									i.fas.fa-star
-								ul.colors.list-inline
-									li.list-inline-item A
-									li.list-inline-item A
-									li.list-inline-item A
-									li.list-inline-item A
-
-								p.desc Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam, aut placeat illo, temporibus repellendus nostrum debitis alias corrupti eos numquam laboriosam sint quas illum velit beatae quia laborum, molestiae non.
-								p.more 
-									a.btn.btn-primary(href="#" target="_blank") View More
+					
