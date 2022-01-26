@@ -146,7 +146,7 @@ var MEYER_APP = {
     }
   },
   buildPaging: function buildPaging(e, i) {
-    var totalPages = Math.floor(i / e);
+    var totalPages = Math.floor(i / e) > 0 ? Math.floor(i / e) : 1;
 
     for (var index = 0; index < totalPages; index++) {
       if (parseInt(getParameterByName('page')) == index + 1 || isNaN(parseInt(getParameterByName('page'))) && index == 0) {
@@ -164,16 +164,27 @@ var MEYER_APP = {
       MEYER_APP.buildcustomType();
       MEYER_APP.buildcustomRating();
       MEYER_APP.buildcustomColors(); // // Add Products
-      // let newData = data;
-      // for (const key in newData) {
-      // 	if (Object.hasOwnProperty.call(newData, key)) {
-      // 		console.log(newData[key].rating);
+      // for (const key in data) {
+      // 	if (Object.hasOwnProperty.call(data, key)) {
+      // 		console.log(data[key].rating);
       // 	}
       // }
+      // console.log((parseInt(getParameterByName('rating')) + 1));
 
-      var newData = data.filter(function (el) {
-        return el.rating >= parseInt(getParameterByName('rating')) && el.rating <= parseInt(getParameterByName('rating')) + 1;
-      });
+      var newData = data;
+
+      if (getParameterByName('price')) {
+        newData = newData.filter(function (el) {
+          return parseInt(el.price) <= parseInt(getParameterByName('price'));
+        });
+      }
+
+      if (getParameterByName('rating')) {
+        newData = newData.filter(function (el) {
+          return el.rating >= parseInt(getParameterByName('rating')) && el.rating < parseInt(getParameterByName('rating')) + 1;
+        });
+      }
+
       console.log(newData);
 
       if (parseInt(getParameterByName('page'))) {
