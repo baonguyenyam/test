@@ -114,15 +114,22 @@ var MEYER_APP = {
 				MEYER_APP.buildcustomRating();
 				MEYER_APP.buildcustomColors();
 				// // Add Products
-				// for (const key in data) {
-				// 	if (Object.hasOwnProperty.call(data, key)) {
-				// 		console.log(data[key].rating);
-						
-				// 	}
-				// }
-				// console.log((parseInt(getParameterByName('rating')) + 1));
 				let newData = data
 				
+				if(getParameterByName('type')) {
+					let m = getParameterByName('type').split(',');
+					let AlltmpData = [];
+					for (let key in m) {
+						let tmpData = [];
+						if (Object.hasOwnProperty.call(m, key)) {
+							tmpData = newData.filter(function(item) {
+								return item.product_type.includes(m[key]);
+							});
+							AlltmpData = AlltmpData.concat(tmpData);
+						}
+					}
+					newData = AlltmpData;
+				}
 				if(getParameterByName('price')) {
 					newData = newData.filter(function (el) {
 						return parseInt(el.price) <= parseInt(getParameterByName('price'));
