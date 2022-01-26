@@ -13,7 +13,7 @@ taskList.forEach(function (taskFile) {
 // Lệnh mặc định của Gulp
 gulp.task('default', gulp.series(
 		'clean',
-		// 'copy',
+		'copy',
 		// 'copy-css',
 		'copy-img',
 		'copy-fonts',
@@ -34,7 +34,7 @@ gulp.task('default', gulp.series(
 );
 gulp.task('build', gulp.series(
 		'clean',
-		// 'copy',
+		'copy',
 		// 'copy-css',
 		'copy-img',
 		'copy-fonts',
