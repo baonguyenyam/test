@@ -14,7 +14,7 @@ block body
 						h2 Products
 					.col-auto
 						select#showItems.custom-select.mr-sm-2
-							option(value='', selected) Show
+							option(value='9') Default
 		.container.py-3
 			.row 
 				.col-lg-3.order-lg-1.order-2
@@ -23,30 +23,17 @@ block body
 						hr.border-bottom 
 					h6.pb-3.mb-3.border-bottom Price
 					.mb-4
-						input#customRange2.custom-range(type="range", min="0", max="5")
+						input#customPrice.custom-range(type="range")
 					h6.pb-3.mb-3.border-bottom Type 
 					.mb-4
-						.form-check
-							input#inlineCheckbox1.form-check-input(type="checkbox", value="option1")
-							label.form-check-label(for="inlineCheckbox1") 1
-						.form-check
-							input#inlineCheckbox2.form-check-input(type="checkbox", value="option2")
-							label.form-check-label(for="inlineCheckbox2") 2
+						#customType
 					h6.pb-3.mb-3.border-bottom Rating
 					.mb-4
-						.form-check
-							input#inlineCheckbox4.form-check-input(type="radio", name="inlineRadioOptions" value="option1")
-							label.form-check-label(for="inlineCheckbox4") 1
-						.form-check
-							input#inlineCheckbox5.form-check-input(type="radio", name="inlineRadioOptions" value="option2")
-							label.form-check-label(for="inlineCheckbox5") 2
+						#customRating
 					h6.pb-3.mb-3.border-bottom Color
 					.mb-4
-						select#inlineFormCustomSelect.custom-select.mr-sm-2
-							option(selected) Display
-							option(value="4") 4
-							option(value="8") 8
-							option(value="12") 12
+						select#customColors.custom-select.mr-sm-2
+							option(value="") All 
 				.col-lg-9.order-lg-1.order-1
 					.row
 						.col-sm-6.col-md-4.item
