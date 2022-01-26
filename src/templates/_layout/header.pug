@@ -1,32 +1,29 @@
 <!-- ////////////// HEADER ////////////// -->
 header
-	nav.navbar.navbar-light
-		a.navbar-brand(href="#") 
-			img(src="./img/logo.png", alt="Logo")
-		//- Đây là nút sẽ hiển thị trong mobile
-		button.navbar-toggler.menu(type="button" data-toggle="collapse" data-target="#fullStackMenu" aria-controls="fullStackMenu" aria-expanded="false" aria-label="Toggle navigation")
-			svg(viewBox="0 0 64 48")
-				path(d="M19,15 L45,15 C70,15 58,-2 49.0177126,7 L19,37")
-				path(d="M19,24 L45,24 C61.2371586,24 57,49 41,33 L32,24")
-				path(d="M45,33 L19,33 C-8,33 6,-2 22,14 L45,37")
-		#fullStackMenu.collapse.navbar-collapse
-			//- Thuộc tính '.mr-auto' này sẽ đẩy me nu về bên phải 
-			.mr-auto
-			ul.navbar-nav
-				//- li.nav-item.active
-					a.nav-link(href="index.html")
-						| Home Page
-				//- li.nav-item.dropdown
-					a#dropdownFS.nav-link.dropdown-toggle(href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Our services
-					.dropdown-menu(aria-labelledby="dropdownFS")
-						a.dropdown-item(href="#") Demo 1
-						a.dropdown-item(href="#") Demo 2
-				li.nav-item
-					a.nav-link(href="#about-us") About Us
-				li.nav-item
-					a.nav-link(href="#services") Our services
-				li.nav-item
-					a.nav-link(href="#testimonial") Testimonial
-				li.nav-item
-					a.btn.btn-call-to-action(href="#contact") Book a meeting
+	.container
+		nav.navbar.navbar-expand-lg
+			a.navbar-brand(href="#") 
+				img(src="./img/logo_w.png", alt="Logo")
+			button.navbar-toggler.menu.collapsed(type="button" data-toggle="collapse" data-target="#nguyenMenu" aria-controls="nguyenMenu" aria-expanded="false" aria-label="Toggle navigation")
+				svg(viewBox="0 0 100 80", width="30", height="30")
+					rect(width="100", height="16")
+					rect(y="30", width="100", height="16")
+					rect(y="60", width="100", height="16")
+			#nguyenMenu.collapse.navbar-collapse
+				.mr-auto
+				ul.navbar-nav
+					li.nav-item.active
+						a.nav-link(href="index.html")
+							| Home Page
+					li.nav-item.dropdown
+						a#dropdownFS.nav-link.dropdown-toggle(href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Our services
+						.dropdown-menu(aria-labelledby="dropdownFS")
+							a.dropdown-item(href="#") Demo 1
+							a.dropdown-item(href="#") Demo 2
+					li.nav-item
+						a.nav-link(href="#about-us") About Us
+					li.nav-item
+						a.nav-link(href="#services") Our services
+					li.nav-item
+						a.nav-link(href="#testimonial") Testimonial
 <!-- ////////////// HEADER ////////////// -->

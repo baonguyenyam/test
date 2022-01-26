@@ -1,9 +1,103 @@
 extends _layout/layout
 
 block variables
-	- var title = 'Nguyen Pham'
+	- var title = 'MEYER Products'
 	- var description = 'Description for home page'
 	- var bodyclass = 'home'
 	- var href = "/index.html"
 block body
-	
+	section.products
+		.container.pt-5
+			.border-bottom.mb-4.pb-2
+				.row
+					.col.mr-auto
+						h2 Products
+					.col-auto
+						select#showItems.custom-select.mr-sm-2
+							option(value='', selected) Show
+		.container.py-3
+			.row 
+				.col-lg-3.order-lg-1.order-2
+					.d-lg-none
+						h4 Filter
+						hr.border-bottom 
+					h6.pb-3.mb-3.border-bottom Price
+					.mb-4
+						input#customRange2.custom-range(type="range", min="0", max="5")
+					h6.pb-3.mb-3.border-bottom Type 
+					.mb-4
+						.form-check
+							input#inlineCheckbox1.form-check-input(type="checkbox", value="option1")
+							label.form-check-label(for="inlineCheckbox1") 1
+						.form-check
+							input#inlineCheckbox2.form-check-input(type="checkbox", value="option2")
+							label.form-check-label(for="inlineCheckbox2") 2
+					h6.pb-3.mb-3.border-bottom Rating
+					.mb-4
+						.form-check
+							input#inlineCheckbox4.form-check-input(type="radio", name="inlineRadioOptions" value="option1")
+							label.form-check-label(for="inlineCheckbox4") 1
+						.form-check
+							input#inlineCheckbox5.form-check-input(type="radio", name="inlineRadioOptions" value="option2")
+							label.form-check-label(for="inlineCheckbox5") 2
+					h6.pb-3.mb-3.border-bottom Color
+					.mb-4
+						select#inlineFormCustomSelect.custom-select.mr-sm-2
+							option(selected) Display
+							option(value="4") 4
+							option(value="8") 8
+							option(value="12") 12
+				.col-lg-9.order-lg-1.order-1
+					.row
+						.col-sm-6.col-md-4.item
+							.product-item
+								img(src="./img/demo1.png")
+								h5.my-2 Product name
+								p.rating
+									i.fas.fa-star
+									i.fas.fa-star
+									i.fas.fa-star
+									i.fas.fa-star.deactive
+									i.fas.fa-star.deactive
+								p.price $32
+								p.more 
+									a.btn.btn-primary(href="javascript:void(0);", data-toggle="modal", data-target="#staticBackdrop") View More
+					.row 
+						.col
+							nav.d-flex.justify-content-end
+								ul.pagination#paging
+									li.page-item.disabled
+										span.page-link Pages
+									
+
+	// Modal
+	#staticBackdrop.modal.fade(data-backdrop="static", data-keyboard="false", tabindex="-1", aria-labelledby="staticBackdropLabel", aria-hidden="true")
+		.modal-dialog.modal-dialog-centered.modal-xl
+			.modal-content
+				.modal-header
+					h5#staticBackdropLabel.modal-title Product name
+					button.close(type="button", data-dismiss="modal", aria-label="Close")
+						i.fas.fa-times
+				.modal-body
+					.row.item
+						.col-lg-4
+							img.w-100(src="./img/demo1.png")
+						.col-lg-8
+							.product-item
+								h3.my-2 Product name
+								p.price.mb-1 $32
+								p.rating
+									i.fas.fa-star
+									i.fas.fa-star
+									i.fas.fa-star
+									i.fas.fa-star
+									i.fas.fa-star
+								ul.colors.list-inline
+									li.list-inline-item A
+									li.list-inline-item A
+									li.list-inline-item A
+									li.list-inline-item A
+
+								p.desc Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam, aut placeat illo, temporibus repellendus nostrum debitis alias corrupti eos numquam laboriosam sint quas illum velit beatae quia laborum, molestiae non.
+								p.more 
+									a.btn.btn-primary(href="#" target="_blank") View More

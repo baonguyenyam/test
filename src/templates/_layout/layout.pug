@@ -1,6 +1,6 @@
 include ../_include/_variables
 doctype html
-html(dir='ltr', lang=config.SEO.seo_lang, itemscope, itemtype="http://schema.org/WebSite", prefix="og: http://ogp.me/ns#", class="no-js")
+html.h-100(dir='ltr', lang=config.SEO.seo_lang, itemscope, itemtype="http://schema.org/WebSite", prefix="og: http://ogp.me/ns#", class="no-js")
 	head
 		meta(charset='utf-8')
 		meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
@@ -27,13 +27,13 @@ html(dir='ltr', lang=config.SEO.seo_lang, itemscope, itemtype="http://schema.org
 		meta(name='msapplication-TileColor', content=config.SEO.mobile_color)
 		meta(name='msapplication-TileImage', content=config.favicondist+'mstile-144x144.png')
 		meta(name='theme-color', content='#ffffff')
-	body#top-page.index-fullwidth(class=bodyclass+'-page' || 'default')
+	body#top-page.index-fullwidth.d-flex.flex-column.h-100(class=bodyclass+'-page' || 'default')
 		
 		<!-- ////////////// Header ////////////// -->
 		include header
 		<!-- ////////////// End Header ////////////// -->
 		<!-- ////////////// Begin Main ////////////// -->
-		main
+		main.flex-shrink-0(role="main")
 			block body
 		<!-- ////////////// End Main ////////////// -->
 		<!-- ////////////// Footer ////////////// -->

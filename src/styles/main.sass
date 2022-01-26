@@ -1,26 +1,61 @@
 // STYLES //////////////////////////////
-
+// INIT CORE 
 @import bower_components/bootstrap/scss/bootstrap
 
-::root
-	--nguyen-color: #2196f3
-	--nguyen-bg: #ffffff
-	--nguyen-icon: #ffffff
-	--nguyen-item-bg: #2196f3
-	--nguyen-item-text: #ffffff
-	--nguyen-copyright-text: #cecece
-	--nguyen-copyright-text-content: #999
-	--nguyen-transition: all 300ms ease
-	--nguyen-font: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"
-
-body
-	font-family: 'open sans', 'san serif'
-	margin: 0
-
-	h2,
-	h4
-		padding-left: 25px
-
-// /* YOUR CODE BELOW HERE - reuse anything above if you'd like.*/
 // SET VARIABLES
+$nguyen-main-color: #1968b3
+$nguyen-sec-color: #f26528
+$nguyen-star-color: #ffeb3b
+$nguyen-border: #ddd
+$nguyen-copyright-bg: #f9f9f9
+$nguyen-copyright-text: #666
+$nguyen-transition: all 300ms ease
+$nguyen-font: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"
+
+// INCLUDES
+@import _includes/header
+@import _includes/footer
+
 // INIT ROOT SETUP 
+body
+	font-family: $nguyen-font
+
+section.products
+	.item
+		margin-bottom: 30px
+		.product-item
+			display: flex
+			justify-content: center
+			align-items: center
+			flex-direction: column
+			border: 1px solid darken(#fff, 5%)
+			border-radius: 3px
+			h5 
+				font-weight: normal
+			.price
+				font-size: 1.1rem
+				font-weight: bold
+				color: $nguyen-sec-color
+			.rating 
+				.fa-star
+					color: $nguyen-star-color
+					&.deactive
+						color: darken(#fff, 15%) !important
+			&:hover 
+				background: $nguyen-copyright-bg
+				border: 1px solid $nguyen-border
+
+#staticBackdrop
+	.item
+		.product-item
+			h5 
+				font-weight: normal
+			.price
+				font-size: 1.1rem
+				font-weight: bold
+				color: $nguyen-sec-color
+			.rating 
+				.fa-star
+					color: $nguyen-star-color
+					&.deactive
+						color: darken(#fff, 15%) !important

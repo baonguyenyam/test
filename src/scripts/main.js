@@ -1,9 +1,10 @@
 // APP
-var NGUYEN_APP = {
+var MEYER_APP = {
 	// REST FULL API 
-	REST_API: './data/data.json',
-	// REST_API: 'http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline',
-	// This code to load JSON data from REST API without jQuery 
+	MEYER_REST_API: './data/data.json',
+	// MEYER_REST_API: 'http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline',
+	MEYER_DEFAULT_PAGE: parseInt(getParameterByName('showItems')) ? parseInt(getParameterByName('showItems')) : 9,
+	MEYER_CURRENT_QUERY: '&color=' + getParameterByName('color') + '&type=' + getParameterByName('type') + '&rating=' + getParameterByName('rating') + '&price=' + getParameterByName('price'),
 	jsonLoad: (path, success, error) => {
 		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = () => {
@@ -20,28 +21,47 @@ var NGUYEN_APP = {
 		xhr.open("GET", path, true);
 		xhr.send();
 	},
-	// Call API 
-	getData: () => {
-		NGUYEN_APP.jsonLoad(NGUYEN_APP.REST_API,
-			(data) => { console.log(data); },
-			(xhr) => { console.error(xhr); }
+	buildShowItem: () => {
+		let arrayPage = [9,12,15];
+		for (let key in arrayPage) {
+			if (Object.hasOwnProperty.call(arrayPage, key)) {
+				$('#showItems').append('<option value="' + arrayPage[key] + '">' + arrayPage[key] + '</option>');
+			}
+		}
+		$('#showItems').on('change', () => {
+			window.location.href = '?showItems=' + $('#showItems').val();
+		});
+	},
+	buildPaging: (e,i) => {
+		let totalPages = Math.floor(i/e);
+		for (let index = 0; index < totalPages; index++) {
+			if(((parseInt(getParameterByName('page')) == (index+1))) || ((isNaN(parseInt(getParameterByName('page')))) && (index == 0))) { 
+				$('#paging').append('<li class="page-item active"><a class="page-link" href="?showItems='+e+'&page='+(index+1)+MEYER_APP.MEYER_CURRENT_QUERY+'">'+(index+1)+'</a></li>');
+			} else {
+				$('#paging').append('<li class="page-item"><a class="page-link" href="?showItems='+e+'&page='+(index+1)+MEYER_APP.MEYER_CURRENT_QUERY+'">'+(index+1)+'</a></li>');
+			}
+		}
+	},
+	// Init App
+	init: () => {
+		MEYER_APP.jsonLoad(MEYER_APP.MEYER_REST_API,
+			(data) => { 
+				let total = data.length;
+				let defaultPage = MEYER_APP.MEYER_DEFAULT_PAGE;
+				MEYER_APP.buildShowItem();
+				MEYER_APP.buildPaging(defaultPage, total);
+				// // Add Products
+				// $.each(data.slice(0,MEYER_APP.MEYER_DEFAULT_PAGE), (i, item) => {
+				// 	console.log(item);
+				// });
+			},
+			(xhr) => { 
+				// console.error(xhr); 
+			}
 		);
 	},
-	// Init APP 
-	init: () => {
-		console.log(NGUYEN_APP.getData());
-	}
 }
 
-// This code will be watching Browser ready without jQuery
-NguyenAppReady(() => {
-	// var lift_chat_element = document.getElementById("lift-chat-box");
-	// if(typeof(lift_chat_element) != 'undefined' && lift_chat_element != null && lift_chat_element != "") {
-	// 	LIFT_CHAT_APP.init()
-	// } else {
-	// 	document.body.appendChild(LIFT_CHAT_APP.mainHTML())
-	// 	LIFT_CHAT_APP.init()
-	// }
-	NGUYEN_APP.init();
-
+jQuery(() => { 
+	MEYER_APP.init();
 });

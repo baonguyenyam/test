@@ -1,88 +1,22 @@
-/**
- * @license
- * Coding by Nguyen Pham
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://baonguyenyam.github.io/cv
- */
-'use strict';
+"use strict";
 
-(function (funcName, baseObj) {
-  funcName = funcName || "NguyenAppReady";
-  baseObj = baseObj || window;
-  var readyList = [];
-  var readyFired = false;
-  var readyEventHandlersInstalled = false;
-
-  function ready() {
-    if (!readyFired) {
-      readyFired = true;
-
-      for (var i = 0; i < readyList.length; i++) {
-        readyList[i].fn.call(window, readyList[i].ctx);
-      }
-
-      readyList = [];
-    }
-  }
-
-  function readyStateChange() {
-    if (document.readyState === "complete") {
-      ready();
-    }
-  }
-
-  baseObj[funcName] = function (callback, context) {
-    if (typeof callback !== "function") {
-      throw new TypeError("callback for NguyenAppReady(fn) must be a function");
-    }
-
-    if (readyFired) {
-      setTimeout(function () {
-        callback(context);
-      }, 1);
-      return;
-    } else {
-      readyList.push({
-        fn: callback,
-        ctx: context
-      });
-    }
-
-    if (document.readyState === "complete") {
-      setTimeout(ready, 1);
-    } else if (!readyEventHandlersInstalled) {
-      if (document.addEventListener) {
-        document.addEventListener("DOMContentLoaded", ready, false);
-        window.addEventListener("load", ready, false);
-      } else {
-        document.attachEvent("onreadystatechange", readyStateChange);
-        window.attachEvent("onload", ready);
-      }
-
-      readyEventHandlersInstalled = true;
-    }
-  };
-})("NguyenAppReady", window);
-
-function b64EncodeUnicode(str) {
-  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function toSolidBytes(match, p1) {
-    return String.fromCharCode('0x' + p1);
-  }));
-}
-
-function b64DecodeUnicode(str) {
-  return decodeURIComponent(atob(str).split('').map(function (c) {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-  }).join(''));
+function getParameterByName(name) {
+  var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window.location.href;
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+      results = regex.exec(url);
+  if (!results) return '';
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
 } // APP
 
 
-var NGUYEN_APP = {
+var MEYER_APP = {
   // REST FULL API 
-  REST_API: './data/data.json',
-  // REST_API: 'http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline',
-  // This code to load JSON data from REST API without jQuery 
+  MEYER_REST_API: './data/data.json',
+  // MEYER_REST_API: 'http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline',
+  MEYER_DEFAULT_PAGE: parseInt(getParameterByName('showItems')) ? parseInt(getParameterByName('showItems')) : 9,
+  MEYER_CURRENT_QUERY: '&color=' + getParameterByName('color') + '&type=' + getParameterByName('type') + '&rating=' + getParameterByName('rating') + '&price=' + getParameterByName('price'),
   jsonLoad: function jsonLoad(path, success, error) {
     var xhr = new XMLHttpRequest();
 
@@ -99,28 +33,45 @@ var NGUYEN_APP = {
     xhr.open("GET", path, true);
     xhr.send();
   },
-  // Call API 
-  getData: function getData() {
-    NGUYEN_APP.jsonLoad(NGUYEN_APP.REST_API, function (data) {
-      console.log(data);
-    }, function (xhr) {
-      console.error(xhr);
+  buildShowItem: function buildShowItem() {
+    var arrayPage = [9, 12, 15];
+
+    for (var key in arrayPage) {
+      if (Object.hasOwnProperty.call(arrayPage, key)) {
+        $('#showItems').append('<option value="' + arrayPage[key] + '">' + arrayPage[key] + '</option>');
+      }
+    }
+
+    $('#showItems').on('change', function () {
+      window.location.href = '?showItems=' + $('#showItems').val();
     });
   },
-  // Init APP 
-  init: function init() {
-    console.log(NGUYEN_APP.getData());
-  }
-}; // This code will be watching Browser ready without jQuery
+  buildPaging: function buildPaging(e, i) {
+    var totalPages = Math.floor(i / e);
 
-NguyenAppReady(function () {
-  // var lift_chat_element = document.getElementById("lift-chat-box");
-  // if(typeof(lift_chat_element) != 'undefined' && lift_chat_element != null && lift_chat_element != "") {
-  // 	LIFT_CHAT_APP.init()
-  // } else {
-  // 	document.body.appendChild(LIFT_CHAT_APP.mainHTML())
-  // 	LIFT_CHAT_APP.init()
-  // }
-  NGUYEN_APP.init();
+    for (var index = 0; index < totalPages; index++) {
+      if (parseInt(getParameterByName('page')) == index + 1 || isNaN(parseInt(getParameterByName('page'))) && index == 0) {
+        $('#paging').append('<li class="page-item active"><a class="page-link" href="?showItems=' + e + '&page=' + (index + 1) + MEYER_APP.MEYER_CURRENT_QUERY + '">' + (index + 1) + '</a></li>');
+      } else {
+        $('#paging').append('<li class="page-item"><a class="page-link" href="?showItems=' + e + '&page=' + (index + 1) + MEYER_APP.MEYER_CURRENT_QUERY + '">' + (index + 1) + '</a></li>');
+      }
+    }
+  },
+  // Init App
+  init: function init() {
+    MEYER_APP.jsonLoad(MEYER_APP.MEYER_REST_API, function (data) {
+      var total = data.length;
+      var defaultPage = MEYER_APP.MEYER_DEFAULT_PAGE;
+      MEYER_APP.buildShowItem();
+      MEYER_APP.buildPaging(defaultPage, total); // // Add Products
+      // $.each(data.slice(0,MEYER_APP.MEYER_DEFAULT_PAGE), (i, item) => {
+      // 	console.log(item);
+      // });
+    }, function (xhr) {// console.error(xhr); 
+    });
+  }
+};
+jQuery(function () {
+  MEYER_APP.init();
 });
 //# sourceMappingURL=main.js.map
