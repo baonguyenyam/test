@@ -32,13 +32,6 @@ var MEYER_APP = {
 	},
 	buildItems: (e) => {
 		___buildItems(e);
-		MEYER_APP.buildStars()
-		$('#staticBackdrop').on('show.bs.modal', function () {
-			MEYER_APP.buildStars()
-		})
-	},
-	buildStars: () => {
-		___buildStar()
 	},
 	// Init App
 	init: () => {

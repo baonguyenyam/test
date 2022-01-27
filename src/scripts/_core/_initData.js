@@ -37,11 +37,11 @@ function ___filterData(e, MEYER_APP) {
 	// PAGING
 	if (parseInt(getParameterByName('page'))) {
 		$.each(e.slice(((parseInt(getParameterByName('page')) - 1) * MEYER_APP.MEYER_DEFAULT_PAGE), (((parseInt(getParameterByName('page')) - 1) * MEYER_APP.MEYER_DEFAULT_PAGE) + MEYER_APP.MEYER_DEFAULT_PAGE)), (i, item) => {
-			MEYER_APP.buildItems(item);
+			___buildItems(item);
 		});
 	} else {
 		$.each(e.slice(0, MEYER_APP.MEYER_DEFAULT_PAGE), (i, item) => {
-			MEYER_APP.buildItems(item);
+			___buildItems(item);
 		});
 	}
 	MEYER_APP.buildPaging(MEYER_APP.MEYER_DEFAULT_PAGE, e.length);
