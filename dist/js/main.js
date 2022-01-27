@@ -217,8 +217,30 @@ function ___filterData(e, MEYER_APP) {
     })();
   }
 
-  if (getParameterByName('color')) {// let m = getParameterByName('color').split(',');
-    // e = AlltmpData;
+  if (getParameterByName('color')) {
+    (function () {
+      var m = getParameterByName('color').split(',');
+      var AlltmpData = [];
+
+      var _loop2 = function _loop2(key) {
+        var tmpData = [];
+
+        if (Object.hasOwnProperty.call(m, key)) {
+          tmpData = e.filter(function (activity) {
+            return activity.product_colors.some(function (el) {
+              return el.colour_name === m[key] + ' ' || el.colour_name === m[key];
+            });
+          });
+          AlltmpData = AlltmpData.concat(tmpData);
+        }
+      };
+
+      for (var key in m) {
+        _loop2(key);
+      }
+
+      e = AlltmpData;
+    })();
   }
 
   if (getParameterByName('price')) {
@@ -237,7 +259,8 @@ function ___filterData(e, MEYER_APP) {
   if (e.length <= 0) {
     ___buildItemsEmpty();
   } else {
-    $('.itemsall').text(e.length); // console.log(e);
+    $('.itemsall').text(e.length);
+    console.log(e);
   } // PAGING
 
 
@@ -305,32 +328,5 @@ var MEYER_APP = {
 };
 jQuery(function () {
   MEYER_APP.init();
-}); // var data = { records : [{ "empid": 1, "fname": "X", "lname": "Y" }, { "empid": 2, "fname": "A", "lname": "Y" }, { "empid": 3, "fname": "B", "lname": "Y" }, { "empid": 4, "fname": "C", "lname": "Y" }, { "empid": 5, "fname": "C", "lname": "Y" }] }
-// var empIds = [1,4,5]
-// var filteredArray = data.records.filter(function(itm){
-//   return empIds.indexOf(itm.empid) > -1;
-// });
-// filteredArray = { records : filteredArray };
-
-var recActivities = [{
-  name: 'Swimming',
-  ages: [6, 7, 8],
-  maxCap: 10
-}, {
-  name: 'Skating',
-  ages: [8, 9, 10],
-  maxCap: 20
-}, {
-  name: 'Skating',
-  ages: [],
-  maxCap: 20
-}, {
-  name: 'Open Gym',
-  ages: [10, 11, 12],
-  maxCap: 30
-}];
-var ageAppropriate = recActivities.filter(function (activity) {
-  return activity.ages.includes(8);
 });
-console.log(ageAppropriate);
 //# sourceMappingURL=main.js.map

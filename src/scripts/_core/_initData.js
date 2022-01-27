@@ -14,8 +14,20 @@ function ___filterData(e, MEYER_APP) {
 		e = AlltmpData;
 	}
 	if (getParameterByName('color')) {
-		// let m = getParameterByName('color').split(',');
-		// e = AlltmpData;
+		let m = getParameterByName('color').split(',');
+		let AlltmpData = [];
+		for (let key in m) {
+			let tmpData = [];
+			if (Object.hasOwnProperty.call(m, key)) {
+				tmpData = e.filter(function(activity) {
+					return activity.product_colors.some(function(el) {
+						return el.colour_name === m[key]+' ' || el.colour_name === m[key];
+					});
+				});
+				AlltmpData = AlltmpData.concat(tmpData);
+			}
+		}
+		e = AlltmpData;
 	}
 	if (getParameterByName('price')) {
 		e = e.filter(function (el) {
@@ -32,7 +44,7 @@ function ___filterData(e, MEYER_APP) {
 		___buildItemsEmpty()
 	} else {
 		$('.itemsall').text(e.length);
-		// console.log(e);
+		console.log(e);
 	}
 	// PAGING
 	if (parseInt(getParameterByName('page'))) {
