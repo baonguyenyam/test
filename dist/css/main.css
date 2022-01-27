@@ -7289,4 +7289,10 @@ section.products .item {
   #staticBackdrop .item .product-item .rating .fa-star.deactive {
     color: #d9d9d9 !important; }
 
+#staticBackdrop .item .product-item .colors li {
+  border: 1px solid #ddd;
+  height: 30px;
+  width: 30px;
+  position: relative; }
+
 /*# sourceMappingURL=main.css.map */
