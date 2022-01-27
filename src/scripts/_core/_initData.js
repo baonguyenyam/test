@@ -32,7 +32,7 @@ function ___filterData(e, MEYER_APP) {
 		___buildItemsEmpty()
 	} else {
 		$('.itemsall').text(e.length);
-		console.log(e);
+		// console.log(e);
 	}
 	// PAGING
 	if (parseInt(getParameterByName('page'))) {
