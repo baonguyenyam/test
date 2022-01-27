@@ -28,7 +28,12 @@ function ___filterData(e, MEYER_APP) {
 		});
 	}
 	// NEW DATA 
-	console.log(e);
+	if(e.length <= 0){
+		___buildItemsEmpty()
+	} else {
+		$('.itemsall').text(e.length);
+		console.log(e);
+	}
 	// PAGING
 	if (parseInt(getParameterByName('page'))) {
 		$.each(e.slice(((parseInt(getParameterByName('page')) - 1) * MEYER_APP.MEYER_DEFAULT_PAGE), (((parseInt(getParameterByName('page')) - 1) * MEYER_APP.MEYER_DEFAULT_PAGE) + MEYER_APP.MEYER_DEFAULT_PAGE)), (i, item) => {

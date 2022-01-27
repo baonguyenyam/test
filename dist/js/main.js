@@ -108,7 +108,13 @@ function ___filterData(e, MEYER_APP) {
   } // NEW DATA 
 
 
-  console.log(e); // PAGING
+  if (e.length <= 0) {
+    ___buildItemsEmpty();
+  } else {
+    $('.itemsall').text(e.length);
+    console.log(e);
+  } // PAGING
+
 
   if (parseInt(getParameterByName('page'))) {
     $.each(e.slice((parseInt(getParameterByName('page')) - 1) * MEYER_APP.MEYER_DEFAULT_PAGE, (parseInt(getParameterByName('page')) - 1) * MEYER_APP.MEYER_DEFAULT_PAGE + MEYER_APP.MEYER_DEFAULT_PAGE), function (i, item) {
@@ -137,6 +143,10 @@ function ___buildItems(e) {
     $('#staticBackdrop .modal-title').text(e.name);
     $('#staticBackdrop .modal-body').html('<div class="row item"> <div class="col-lg-4"><img class="w-100" src="' + e.api_featured_image + '"></div> <div class="col-lg-8"> <div class="product-item"> <h3 class="my-2">' + e.name + '</h3> <p class="price mb-1">$' + e.price + '</p> <p class="rating"  data-rating="' + e.rating + '"></p> <ul class="colors list-inline">' + array_colors + '</ul> <p class="desc">' + e.description + '</p> <p class="more"><a class="btn btn-primary" href="' + e.product_link + '" target="_blank">View More</a></p> </div> </div> </div>');
   });
+}
+
+function ___buildItemsEmpty(e) {
+  $('#items').append('<div class="col-sm-12"><div class="alert alert-danger mb-4"><h4 class="alert-heading">Not found!</h4> <p>No items found in store</p></div></div>');
 }
 
 function ___buildPaging(e, i, MEYER_APP) {
